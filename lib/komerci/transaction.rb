@@ -12,7 +12,7 @@ module Komerci
     }
 
     attr_accessor :total, :filiation_number, :order_number, :card_number, :card_code, :card_year, :card_month, :card_owner, :auto_confirm
-    attr_reader :transaction, :installments
+    attr_reader :transaction, :installments, :response_xml
 
     def transaction=(value)
       raise InvalidTransaction, value unless ALLOWED_TRANSACTIONS.include?(value)
@@ -59,6 +59,7 @@ module Komerci
       }
 
       response = RestClient.post(uri, params)
+      @response_xml = response.to_str
       Authorization.from_xml(response)
     end
   end
