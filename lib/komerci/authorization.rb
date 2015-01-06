@@ -4,7 +4,7 @@ require "nokogiri"
 module Komerci
   class Authorization
     attr_accessor :code, :order_number, :number, :receipt_number, :authentication_number, :sequential_number, :country_code
-    attr_reader :message, :date
+    attr_reader :message, :date, :response_xml
 
     def date=(value)
       @date = Date.parse(value)
@@ -15,6 +15,8 @@ module Komerci
     end
 
     def self.from_xml(string)
+      @response_xml = string
+      
       xml = Nokogiri::XML(string)
       new.tap do |a|
         a.code = xml.at("CODRET").text
@@ -26,6 +28,8 @@ module Komerci
         a.authentication_number = xml.at("NUMAUTENT").text
         a.sequential_number = xml.at("NUMSQN").text
         a.country_code = xml.at("ORIGEM_BIN").text
+        a.code_confirm = xml.at("CONFCODRET").text
+        a.message_confirm = xml.at("CONFMSGRET").text
       end
     end
   end

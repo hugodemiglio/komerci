@@ -11,13 +11,14 @@ module Komerci
       :pre_autorizacao => "73"
     }
 
-    attr_accessor :total, :filiation_number, :order_number, :card_number, :card_code, :card_year, :card_month, :card_owner
+    attr_accessor :total, :filiation_number, :order_number, :card_number, :card_code, :card_year, :card_month, :card_owner, :auto_confirm
     attr_reader :transaction, :installments
 
     def transaction=(value)
       raise InvalidTransaction, value unless ALLOWED_TRANSACTIONS.include?(value)
       @transaction = value
-      @installments = 0 if @transaction == :a_vista
+      @installments = 0    if @transaction == :a_vista
+      @auto_confirm = true if @transaction == :pre_autorizacao
     end
 
     def installments=(value)
@@ -26,7 +27,7 @@ module Komerci
     end
 
     def send
-      uri = "https://ecommerce.redecard.com.br/pos_virtual/wskomerci/cap_teste.asmx/GetAuthorizedTst"
+      uri = "https://ecommerce.redecard.com.br/pos_virtual/wskomerci/cap.asmx/GetAuthorized"
       # uri = URI(uri)
       params = {
         :Total => "%.2f" % total,
@@ -53,7 +54,7 @@ module Komerci
         :Numdoc2 => "",
         :Numdoc3 => "",
         :Numdoc4 => "",
-        :ConfTxn => "",
+        :ConfTxn => (auto_confirm == true ? "S" : ""),
         :AddData => ""
       }
 
@@ -61,4 +62,30 @@ module Komerci
       Authorization.from_xml(response)
     end
   end
+
+  class PreAuthorization < Transaction
+    def transaction=(value)
+      raise InvalidTransaction, value unless value == :pre_autorizacao
+    end
+
+    def transaction
+      :pre_autorizacao
+    end
+
+    def installments=(value)
+      raise InvalidTransaction, value unless value == ""
+    end
+
+    def installments
+      ""
+    end
+
+    def auto_confirm=(value)
+      raise InvalidTransaction, value unless value == true
+    end
+
+    def auto_confirm
+      true
+    end
+  end  
 end
