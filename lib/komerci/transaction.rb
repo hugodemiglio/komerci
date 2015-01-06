@@ -58,6 +58,7 @@ module Komerci
         :AddData => ""
       }
 
+      puts "=-=-=-=-=-=-=-=-#{params.inspect}"
       response = RestClient.post(uri, params)
       puts response
       @response_xml = response.to_str
