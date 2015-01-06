@@ -7,7 +7,7 @@ module Komerci
     attr_reader :message, :date, :response_xml
 
     def date=(value)
-      @date = Date.parse(value)
+      @date = Date.parse(value) unless value.blank?
     end
 
     def message=(value)
