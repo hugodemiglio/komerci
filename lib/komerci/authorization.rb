@@ -16,6 +16,7 @@ module Komerci
 
     def self.from_xml(string)
       @response_xml = string
+      puts string
       
       xml = Nokogiri::XML(string)
       new.tap do |a|
