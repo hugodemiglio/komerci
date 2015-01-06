@@ -55,7 +55,7 @@ module Komerci
         :Numdoc3 => "",
         :Numdoc4 => "",
         :ConfTxn => (auto_confirm == true ? "S" : ""),
-        :AddData => ""
+        :Add_Data => ""
       }
 
       puts "=-=-=-=-=-=-=-=-#{params.inspect}"
