@@ -59,6 +59,7 @@ module Komerci
       }
 
       response = RestClient.post(uri, params)
+      puts response
       @response_xml = response.to_str
       Authorization.from_xml(response)
     end
