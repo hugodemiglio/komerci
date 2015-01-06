@@ -20,18 +20,23 @@ module Komerci
       
       xml = Nokogiri::XML(string)
       new.tap do |a|
-        a.code = xml.at("CODRET").text
-        a.message = xml.at("MSGRET").text
-        a.order_number = xml.at("NUMPEDIDO").text
-        a.date = xml.at("DATA").text
-        a.number = xml.at("NUMAUTOR").text
-        a.receipt_number = xml.at("NUMCV").text
-        a.authentication_number = xml.at("NUMAUTENT").text
-        a.sequential_number = xml.at("NUMSQN").text
-        a.country_code = xml.at("ORIGEM_BIN").text
-        a.code_confirm = xml.at("CONFCODRET").text
-        a.message_confirm = xml.at("CONFMSGRET").text
+        a.code                  = xml_text(xml, "CODRET")
+        a.message               = xml_text(xml, "MSGRET")
+        a.order_number          = xml_text(xml, "NUMPEDIDO")
+        a.date                  = xml_text(xml, "DATA")
+        a.number                = xml_text(xml, "NUMAUTOR")
+        a.receipt_number        = xml_text(xml, "NUMCV")
+        a.authentication_number = xml_text(xml, "NUMAUTENT")
+        a.sequential_number     = xml_text(xml, "NUMSQN")
+        a.country_code          = xml_text(xml, "ORIGEM_BIN")
+        a.code_confirm          = xml_text(xml, "CONFCODRET")
+        a.message_confirm       = xml_text(xml, "CONFMSGRET")
       end
+    end
+
+    private
+    def self.xml_text root, node_name
+      root.at(node_name).text unless root.nil? or root.at(node_name).nil?
     end
   end
 end
