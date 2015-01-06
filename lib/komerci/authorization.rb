@@ -11,11 +11,13 @@ module Komerci
     end
 
     def message=(value)
-      @message = CGI.unescape(value)
+      value = CGI.unescape(value) unless value.blank?
+      @message = value
     end
 
     def message_confirm=(value)
-      @message_confirm = CGI.unescape(value)
+      value = CGI.unescape(value) unless value.blank?
+      @message_confirm = value
     end
 
     def self.from_xml(string)
