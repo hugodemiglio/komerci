@@ -3,8 +3,8 @@ require "nokogiri"
 
 module Komerci
   class Authorization
-    attr_accessor :code, :order_number, :number, :receipt_number, :authentication_number, :sequential_number, :country_code
-    attr_reader :message, :date, :response_xml
+    attr_accessor :code, :code_confirm, :order_number, :number, :receipt_number, :authentication_number, :sequential_number, :country_code
+    attr_reader :message, :message_confirm, :date, :response_xml
 
     def date=(value)
       @date = Date.parse(value) unless value.blank?
@@ -12,6 +12,10 @@ module Komerci
 
     def message=(value)
       @message = CGI.unescape(value)
+    end
+
+    def message_confirm=(value)
+      @message_confirm = CGI.unescape(value)
     end
 
     def self.from_xml(string)
