@@ -11,13 +11,13 @@ module Komerci
     end
 
     def message=(value)
-      value = CGI.unescape(value) unless value.blank?
+      #value = CGI.unescape(value) unless value.blank?
       value = value.encode("utf-8", 'binary', :invalid => :replace, :undef => :replace, :replace => '') unless value.blank?
       @message = value
     end
 
     def message_confirm=(value)
-      value = CGI.unescape(value) unless value.blank?
+      #value = CGI.unescape(value) unless value.blank?
       value = value.encode("utf-8", 'binary', :invalid => :replace, :undef => :replace, :replace => '') unless value.blank?
       @message_confirm = value
     end
