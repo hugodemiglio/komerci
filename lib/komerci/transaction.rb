@@ -32,7 +32,7 @@ module Komerci
       params = {
         :Total => "%.2f" % total,
         :Transacao => ALLOWED_TRANSACTIONS[transaction],
-        :Parcelas => "%02d" % installments,
+        :Parcelas => "%02d" % installments.to_i,
         :Filiacao => filiation_number,
         :NumPedido => order_number,
         :Nrcartao => card_number,
