@@ -58,9 +58,8 @@ module Komerci
         :Add_Data => ""
       }
 
-      puts "=-=-=-=-=-=-=-=-#{params.inspect}"
+      RestClient.proxy = ENV["KOMERCI_PROXY_URL"] if ENV["KOMERCI_PROXY_URL"]
       response = RestClient.post(uri, params)
-      puts response
       @response_xml = response.to_str
       Authorization.from_xml(response)
     end
