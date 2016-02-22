@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Komerci::VERSION
 
-  gem.add_dependency "rest-client", "~> 1.6.7"
+  gem.add_dependency "rest-client", "~> 1.8"
   gem.add_dependency "nokogiri", "~> 1.6.2"
   gem.add_development_dependency "rspec", "~> 2.9.0"
   gem.add_development_dependency "webmock", "~> 1.8.6"
